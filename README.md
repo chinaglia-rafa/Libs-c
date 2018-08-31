@@ -1,4 +1,4 @@
-# Libs-c
+# Libs em C
 Libs em C para colaborar com os alunos da FCT
 
 ## COLORS.H
@@ -7,6 +7,24 @@ Esta biblioteca usa algumas funções do console **Windows**
 para trabalhar com cores.
 
 ### Utilização 
+
+Mantenha o arquivo colors-vX.Y.h no mesmo diretório que seus arquivos fontes .c
+e inclua a lib usando #include.
+
+```c
+#include "colors-vX.Y.h"
+```
+
+:information_source: É importante notar que não são utilizados < e >, mas sim aspas duplas.
+
+:information_source: O nome do arquivo deve ser preenchido com a versão da lib (por exemplo **colors-v1.0.h**)
+
+
+Para iniciar a lib, use o comando abaixo no começo da sua função main
+
+```c
+initColors();
+```
 
 A colors.h possui as seguintes cores disponíveis:
 
@@ -46,3 +64,7 @@ printSuccess("sucesso", 1);
 
 printInfo("informativo", 1);
 ```
+O arquivo teste.c tem exemplos de uso.
+
+![Image of Yaktocat](https://i.imgur.com/7FDTCCJ.png)
+
