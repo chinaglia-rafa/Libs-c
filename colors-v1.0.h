@@ -21,14 +21,18 @@ CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
 //	Faz um backuop das configuracoes padroes para uso futuro
 WORD saved_attributes;
 	
+void renderLine(int size);
+	
 /*
 **	Essa funcao vai capturar os controles de tela
 **	para podermos administrar as cores.
 */
-void init () {
+void initColors () {
 	//	Captura o controle de saida
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	GetConsoleScreenBufferInfo(hConsole, &consoleInfo);
+	
+	srand(time(NULL));
 }
 
 /*
@@ -41,6 +45,7 @@ void init () {
 **		- purple
 **		- pink
 **		- white
+**		- black
 **		- default
 */
 
@@ -61,6 +66,8 @@ void changeColor(char *color) {
 		SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	} else if (strcmp(color, "white") == 0) {
 		SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	} else if (strcmp(color, "black") == 0) {
+		SetConsoleTextAttribute(hConsole, FOREGROUND_INTENSITY);
 	} else if (strcmp(color, "default") == 0) {
 		SetConsoleTextAttribute(hConsole, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
 	}
@@ -79,7 +86,6 @@ void resetColor() {
 **	da lista de cores suportadas
 */
 void randomColor() {
-	srand(time(NULL));
 	switch (rand() % 7) {
 		case 0:
 			changeColor("blue");
@@ -125,12 +131,12 @@ void printError(char *texto, short simplify) {
 		//	desenhar a linha com o tamanho exato do texto.
 		//	Somamos +4 ao tamanho para comportar tambem o
 		//	icone
-		__renderLine(strlen(texto)+4);
+		renderLine(strlen(texto)+4);
 		printf("\n");
 		printf("[x] ");
 		printf(texto);
 		printf("\n");
-		__renderLine(strlen(texto)+4);
+		renderLine(strlen(texto)+4);
 		printf("\n");
 	}
 	changeColor("default");
@@ -154,12 +160,12 @@ void printWarning(char *texto, short simplify) {
 		//	desenhar a linha com o tamanho exato do texto.
 		//	Somamos +4 ao tamanho para comportar tambem o
 		//	icone
-		__renderLine(strlen(texto)+4);
+		renderLine(strlen(texto)+4);
 		printf("\n");
 		printf("[!] ");
 		printf(texto);
 		printf("\n");
-		__renderLine(strlen(texto)+4);
+		renderLine(strlen(texto)+4);
 		printf("\n");
 	}
 	changeColor("default");
@@ -182,12 +188,12 @@ void printSuccess(char *texto, short simplify) {
 		//	desenhar a linha com o tamanho exato do texto.
 		//	Somamos +4 ao tamanho para comportar tambem o
 		//	icone
-		__renderLine(strlen(texto)+4);
+		renderLine(strlen(texto)+4);
 		printf("\n");
 		printf("[o] ");
 		printf(texto);
 		printf("\n");
-		__renderLine(strlen(texto)+4);
+		renderLine(strlen(texto)+4);
 		printf("\n");
 	}
 	changeColor("default");
@@ -210,12 +216,12 @@ void printInfo(char *texto, short simplify) {
 		//	desenhar a linha com o tamanho exato do texto.
 		//	Somamos +4 ao tamanho para comportar tambem o
 		//	icone
-		__renderLine(strlen(texto)+4);
+		renderLine(strlen(texto)+4);
 		printf("\n");
 		printf("[i] ");
 		printf(texto);
 		printf("\n");
-		__renderLine(strlen(texto)+4);
+		renderLine(strlen(texto)+4);
 		printf("\n");
 	}
 	changeColor("default");
@@ -226,11 +232,10 @@ void printInfo(char *texto, short simplify) {
 **	de tamanho pre-definido
 **	@param size int Tamanho da linha
 */
-void __renderLine(int size) {
+void renderLine(int size) {
 	int i = 1, lim = ceil((double)size / (strlen(BORDER_TYPE)));
 	if (lim > 110) lim = 110;
 	for (i = 1; i <= lim; i++) {
 		printf(BORDER_TYPE);
 	}
 }
-

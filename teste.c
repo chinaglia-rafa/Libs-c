@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "colors.h"
+//	mantenha na mesma pasta que seu arquivo.c
+#include "colors-v1.0.h"
 
 int main (void) {
 	
